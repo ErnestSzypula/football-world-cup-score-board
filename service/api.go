@@ -2,7 +2,9 @@ package service
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
+	football_world_cup_score_board "github.com/ErnestSzypula/football-world-cup-score-board"
 	"os"
 	"strings"
 )
@@ -20,10 +22,14 @@ const (
 
 var helpInfo = "Type \"help\"  for more information."
 
-type Api struct{}
+type Api struct {
+	service *Service
+}
 
-func NewApi() *Api {
-	return &Api{}
+func NewApi(service *Service) *Api {
+	return &Api{
+		service: service,
+	}
 }
 
 func (a *Api) Start() {
@@ -62,6 +68,20 @@ func (a *Api) Start() {
 func (a *Api) StartGame(tokens []string) {
 	if len(tokens) != 2 {
 		fmt.Printf("wrong command args, expect home team and away team, got %v\n", tokens)
+		return
+	}
+
+	request := football_world_cup_score_board.CreateGame{
+		HomeTeam: tokens[0],
+		AwayTeam: tokens[1],
+	}
+
+	if err := a.service.CreateGame(request); err != nil {
+		if errors.Is(err, football_world_cup_score_board.ErrGameAlreadyExist) {
+			fmt.Printf("ERROR: game home team: %s away team: %s already exist\n", request.HomeTeam, request.AwayTeam)
+			return
+		}
+
 		return
 	}
 

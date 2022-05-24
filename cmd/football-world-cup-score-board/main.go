@@ -1,9 +1,16 @@
 package main
 
-import "github.com/ErnestSzypula/football-world-cup-score-board/service"
+import (
+	"github.com/ErnestSzypula/football-world-cup-score-board/service"
+	"github.com/ErnestSzypula/football-world-cup-score-board/storage"
+)
 
 func main() {
-	api := service.NewApi()
+	db := storage.NewInMemoryStorage()
+
+	s := service.NewService(db)
+
+	api := service.NewApi(s)
 
 	api.Start()
 }
