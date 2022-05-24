@@ -19,14 +19,14 @@ func (s *InMemoryStorage) AddGame(game entity.Game) {
 	s.games = append(s.games, game)
 }
 
-func (s *InMemoryStorage) GetGameByTeams(homeTeam, awayTeam string) *entity.Game {
-	game, exist := lo.Find(s.games, func(g entity.Game) bool {
+func (s *InMemoryStorage) GetActiveGameByTeams(homeTeam, awayTeam string) (*entity.Game, int) {
+	game, index, exist := lo.FindIndexOf(s.games, func(g entity.Game) bool {
 		return g.Status == entity.GameStatusActive && g.HomeTeamName == homeTeam && g.AwayTeamName == awayTeam
 	})
 
 	if !exist {
-		return nil
+		return nil, -1
 	}
 
-	return &game
+	return &game, index
 }
