@@ -9,7 +9,6 @@ import (
 var (
 	ErrGameAlreadyExist = errors.New("game already exist")
 	ErrGameNotFound     = errors.New("game not found")
-	ErrInvalidGameScore = errors.New("invalid game score")
 )
 
 type CreateGameRequest struct {
@@ -37,15 +36,18 @@ type UpdateGameRequest struct {
 	AwayTeamScore int
 }
 
-func ValidateUpdateGame(request UpdateGameRequest) error {
-	if request.HomeTeamScore < 0 || request.AwayTeamScore < 0 {
-		return ErrInvalidGameScore
-	}
-
-	return nil
-}
-
 type FinishGameRequest struct {
 	HomeTeamName string
 	AwayTeamName string
+}
+
+type SummaryResponse struct {
+	Items []SummaryGameItem
+}
+
+type SummaryGameItem struct {
+	HomeTeamName  string
+	HomeTeamScore int
+	AwayTeamName  string
+	AwayTeamScore int
 }

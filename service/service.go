@@ -9,8 +9,9 @@ import (
 
 type Storage interface {
 	AddGame(game entity.Game)
-	GetActiveGameByTeams(homeTeam, awayTeam string) (*entity.Game, int)
 	UpdateGame(index int, game entity.Game)
+	GetActiveGameByTeams(homeTeam, awayTeam string) (*entity.Game, int)
+	GetActiveGamesSortedByScore() []entity.Game
 }
 
 type Service struct {
@@ -68,4 +69,22 @@ func (s *Service) FinishGame(request football_world_cup_score_board.FinishGameRe
 	s.storage.UpdateGame(index, *gameEntity)
 
 	return nil
+}
+
+func (s *Service) Summary() football_world_cup_score_board.SummaryResponse {
+	games := s.storage.GetActiveGamesSortedByScore()
+
+	gameItems := make([]football_world_cup_score_board.SummaryGameItem, len(games))
+	for i := range games {
+		gameItems[i] = football_world_cup_score_board.SummaryGameItem{
+			HomeTeamName:  games[i].HomeTeamName,
+			HomeTeamScore: games[i].HomeTeamScore,
+			AwayTeamName:  games[i].AwayTeamName,
+			AwayTeamScore: games[i].AwayTeamScore,
+		}
+	}
+
+	return football_world_cup_score_board.SummaryResponse{
+		Items: gameItems,
+	}
 }
