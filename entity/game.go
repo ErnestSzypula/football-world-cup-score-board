@@ -5,8 +5,8 @@ import "time"
 type GameStatus string
 
 const (
-	GameStatusActive   = "ACTIVE"
-	GameStatusFinished = "FINISHED"
+	GameStatusActive   GameStatus = "ACTIVE"
+	GameStatusFinished GameStatus = "FINISHED"
 )
 
 type Game struct {

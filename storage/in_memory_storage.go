@@ -58,5 +58,5 @@ func (b byScore) Less(i, j int) bool {
 		return b[i].UpdatedAt.After(b[j].UpdatedAt)
 	}
 
-	return leftScore < rightScore
+	return leftScore > rightScore
 }
