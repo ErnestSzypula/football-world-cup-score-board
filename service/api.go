@@ -98,17 +98,25 @@ func (a *Api) UpdateGame(tokens []string) {
 
 	homeTeamScore, err := strconv.Atoi(tokens[1])
 	if err != nil {
-		fmt.Printf("ERROR: wrong home team score expect int got %s", tokens[1])
+		fmt.Printf("ERROR: wrong home team score expect int got %s\n", tokens[1])
+		return
+	}
+
+	if homeTeamScore < 0 {
+		fmt.Printf("ERROR: wrong home team score expect int greater or equal 0 got %d\n", homeTeamScore)
 		return
 	}
 
 	awayTeamScore, err := strconv.Atoi(tokens[3])
 	if err != nil {
-		fmt.Printf("ERROR: wrong away team score expect int got %s", tokens[2])
+		fmt.Printf("ERROR: wrong away team score expect int got %s\n", tokens[2])
 		return
 	}
 
-	// TODO: Check if homeTeamScore & awayTeamScore is greater than or equal 0
+	if awayTeamScore < 0 {
+		fmt.Printf("ERROR: wrong home team score expect int greater or equal 0 got %d\n", awayTeamScore)
+		return
+	}
 
 	request := football_world_cup_score_board.UpdateGameRequest{
 		HomeTeamName:  tokens[0],
