@@ -166,5 +166,19 @@ func (a *Api) Summary() {
 }
 
 func (a *Api) Help() {
-	fmt.Println("help")
+	fmt.Println("Welcome to Football Score Board help utility!")
+	fmt.Println("")
+	fmt.Println("available actions and commands:")
+	fmt.Println("")
+	fmt.Println("START GAME")
+	fmt.Println("start {{.HomeTeamName}} {{.AwayTeamName}}")
+	fmt.Println("")
+	fmt.Println("UPDATE GAME")
+	fmt.Println("update {{.HomeTeamName}} {{.HomeTeamScore}} {{.AwayTeamName}} {{.AwayTeamScore}}")
+	fmt.Println("")
+	fmt.Println("FINISH GAME")
+	fmt.Println("finish {{.HomeTeamName}} {{.AwayTeamScore}}")
+	fmt.Println("")
+	fmt.Println("SUMMARY")
+	fmt.Println("summary")
 }

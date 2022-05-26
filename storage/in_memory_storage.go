@@ -51,12 +51,12 @@ type byScore []entity.Game
 func (b byScore) Len() int      { return len(b) }
 func (b byScore) Swap(i, j int) { b[i], b[j] = b[j], b[i] }
 func (b byScore) Less(i, j int) bool {
-	leftScore := b[i].HomeTeamScore + b[i].AwayTeamScore
-	rightScore := b[j].HomeTeamScore + b[j].AwayTeamScore
+	leftTotal := b[i].HomeTeamScore + b[i].AwayTeamScore
+	rightTotal := b[j].HomeTeamScore + b[j].AwayTeamScore
 
-	if leftScore == rightScore {
+	if leftTotal == rightTotal {
 		return b[i].UpdatedAt.After(b[j].UpdatedAt)
 	}
 
-	return leftScore > rightScore
+	return leftTotal > rightTotal
 }
